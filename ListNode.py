@@ -114,7 +114,23 @@ class ListNode:
         pre: none
         post: x is appended onto the end of the list'''
 
-        pass
+        # create a new node containing x
+        newNode = ListNode(x)
+
+        # link it into the end of the list
+        if self.head is not None:
+            # non-empty list
+            node = self._find(self.size - 1)
+            node.link = newNode
+            self.tail = newNode
+        else:
+            # empty list
+            # set self.head to new node
+            # set self.tail to new Node
+            self.head = newNode
+            self.tail = newNode
+        self.size += 1
+
 
 #----------------------------------------------------------------------
     def insert(self, i, x):
