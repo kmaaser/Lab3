@@ -71,7 +71,8 @@ class ListNode:
         pre: 0 <= position < size
         post: returns data item at the specified position'''
 
-        pass
+        node = self._find(position)
+        return node.item
 
 #----------------------------------------------------------------------
     def __setitem__(self, position, value):
@@ -80,7 +81,8 @@ class ListNode:
         pre: 0 <= position < self.size
         post: sets the data item at the specified position to value'''
 
-        pass
+        node = self._find(position)
+        node.item = value
 
 #----------------------------------------------------------------------
     def __delitem__(self, position):
@@ -89,7 +91,9 @@ class ListNode:
         pre: 0 <= position < self.size
         post: the item at the specified position is removed from the list'''
 
-        pass
+        assert 0 <= position < self.size
+
+        self._delete(position)
 
 #----------------------------------------------------------------------
     def _delete(self, position):
@@ -99,12 +103,20 @@ class ListNode:
         post: the item at the specified position is removed from the list'''
 
         if position == 0:
+            # save item from the initial node
             item = self.head.item
+
+            # change self.head to point "over" the deleted node
             self.head = self.head.link
         else:
-            node = self._find(position -1)
-            item = node.link.item
-            node.link = node.link.link
+            # find the node immediately before the one to delete
+            prev_node = self._find(position -1)
+
+            # save the item from the node to delete
+            item = prev_node.link.item
+
+            # change predecessor to point "over" the deleted node
+            prev_node.link = prev_node.link.link
         self.size -= 1
 
 #----------------------------------------------------------------------
@@ -131,7 +143,6 @@ class ListNode:
             self.tail = newNode
         self.size += 1
 
-
 #----------------------------------------------------------------------
     def insert(self, i, x):
 
@@ -139,17 +150,16 @@ class ListNode:
         pre: 0 <= i <= self.size
         post: x is inserted into the list before position i'''
 
-        newNode = ListNode(x)
+        assert 0 <= i <= self.size
 
-        if self.size == 0:
-            self.head = newNode
-            self.tail = newNode
-            self.size += 1
+        if i == 0:
+            # insert before position 0 requires updating self.head
+            self.head = ListNode(x, self.head)
         else:
-            node = self._find(i - 1)
-            newNode.link = node.link
-            node.link = newNode
-            self.size +=1
+            # find item that node is to be inserted after
+            prev = self._find(i -1)
+            prev.link = ListNode(x, prev.link)
+        self.size += 1
 
 #----------------------------------------------------------------------
     def pop(self, i=None):
@@ -160,7 +170,14 @@ class ListNode:
         post: if i is None, the last item in the list is removed and returned
         otherwise the item at position i is removed and returned'''
 
-        pass
+        assert self.size > 0 and (i is None or (0 <= i < self.size))
+
+        # default is to delete the last item
+        # i could be zero so need to compare to None
+        if i is None:
+            i = self.size - 1
+
+        return self._delete(i)
 
 #----------------------------------------------------------------------
     def index(self, x, start=0):
@@ -194,6 +211,10 @@ class ListNode:
     def __copy__(self):
         '''returns a new LList that contains the same items as self'''
 
-        pass
+        a = ListNode()
+        for i in range(len(self)):
+            a.append(self[i])
+            if self[i] == 0:
+                self.head = i
 
 #----------------------------------------------------------------------
