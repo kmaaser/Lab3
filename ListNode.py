@@ -14,7 +14,7 @@ class ListNode:
     
     #----------------------------------------------------------------------
     
-    def __init__(self, item = None, link = None, tail = None):
+    def __init__(self, item = None, link = None):
 
         '''creates a linked with the specified data value and link
         pre: None
@@ -22,7 +22,10 @@ class ListNode:
         
         self.item = item
         self.link = link
-        self.tail = tail
+        self.head = None
+        self.tail = None
+        self.size = 0
+
 #----------------------------------------------------------------------
 
     def __len__(self):
@@ -30,6 +33,8 @@ class ListNode:
         '''returns number of items in the list
         pre: none
         post: returns number of items in the list'''
+
+        return self.size
 
 #----------------------------------------------------------------------
 
@@ -39,12 +44,19 @@ class ListNode:
         pre: none
         post: '''
 
+        node = self.head
+        while node is not None:
+            yield node.item
+            node = node.link
+
 #----------------------------------------------------------------------
     def _find(self, position):
         '''private method that returns node that is at location position
         in the list (0 is first item, size-1 is last item)
         pre: none
         post: returns the ListNode at the specified position in the list'''
+
+        pass
 
 #----------------------------------------------------------------------
     def __getitem__(self, position):
@@ -53,12 +65,16 @@ class ListNode:
         pre: 0 <= position < size
         post: returns data item at the specified position'''
 
+        pass
+
 #----------------------------------------------------------------------
     def __setitem__(self, position, value):
 
         '''set data item at location position to value
         pre: 0 <= position < self.size
         post: sets the data item at the specified position to value'''
+
+        pass
 
 #----------------------------------------------------------------------
     def __delitem__(self, position):
@@ -67,24 +83,44 @@ class ListNode:
         pre: 0 <= position < self.size
         post: the item at the specified position is removed from the list'''
 
+        pass
+
 #----------------------------------------------------------------------
     def _delete(self, position):
 
         '''private method to delete item at location position from the list
         pre: 0 <= position < self.size
         post: the item at the specified position is removed from the list'''
+
+        pass
+
 #----------------------------------------------------------------------
     def append(self, x):
 
         '''appends x onto end of the list
         pre: none
         post: x is appended onto the end of the list'''
+
+        pass
+
 #----------------------------------------------------------------------
     def insert(self, i, x):
 
         '''inserts x before position i in the list
         pre: 0 <= i <= self.size
         post: x is inserted into the list before position i'''
+
+        newNode = ListNode(x)
+
+        if self.size == 0:
+            self.head = newNode
+            self.tail = newNode
+            self.size += 1
+        else:
+            node = self._find(i - 1)
+            newNode.link = node.link
+            node.link = newNode
+            self.size +=1
 
 #----------------------------------------------------------------------
     def pop(self, i=None):
@@ -95,6 +131,8 @@ class ListNode:
         post: if i is None, the last item in the list is removed and returned
         otherwise the item at position i is removed and returned'''
 
+        pass
+
 #----------------------------------------------------------------------
     def index(self, x, start=0):
 
@@ -104,6 +142,8 @@ class ListNode:
         post: if x is in the list from position start to the end, the position
         it is located at is returned, otherwise a ValueError is raised'''
 
+        pass
+
 #----------------------------------------------------------------------
     def remove(self, x):
         '''removes the first instance of x from the list
@@ -111,14 +151,20 @@ class ListNode:
         post: if x is in the list, the first instance of x is removed from
         the list, otherwise a ValueError is raised'''
 
+        pass
+
 #----------------------------------------------------------------------
     def extend(self, l):
         '''add each element of list l onto the list
         pre: none
         post: each item in the list l is appended onto the list'''
 
+        pass
+
 #----------------------------------------------------------------------
     def __copy__(self):
         '''returns a new LList that contains the same items as self'''
+
+        pass
 
 #----------------------------------------------------------------------
