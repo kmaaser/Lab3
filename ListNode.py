@@ -56,7 +56,13 @@ class ListNode:
         pre: none
         post: returns the ListNode at the specified position in the list'''
 
-        pass
+        assert 0 <= position < self.size
+
+        node = self.head
+        # move forward until we reach the specified node
+        for i in range(position):
+            node = node.link
+        return node
 
 #----------------------------------------------------------------------
     def __getitem__(self, position):
@@ -92,7 +98,14 @@ class ListNode:
         pre: 0 <= position < self.size
         post: the item at the specified position is removed from the list'''
 
-        pass
+        if position == 0:
+            item = self.head.item
+            self.head = self.head.link
+        else:
+            node = self._find(position -1)
+            item = node.link.item
+            node.link = node.link.link
+        self.size -= 1
 
 #----------------------------------------------------------------------
     def append(self, x):
